@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        /* 흑백 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        input[type="text"], input[type="email"], input[type="tel"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #fff;
+            color: #000;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        /* 결제 수단 선택 */
+        .payment-method {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background-color: #fff;
+            color: #000;
+            cursor: pointer;
+        }
+
+        /* 하단 버튼 섹션 */
+        .button-section {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .action-button {
+            padding: 10px 20px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        .action-button:hover {
+            background-color: #333;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Payment Information</h2>
+
+    <!-- 배송지 주소 입력란 -->
+    <div class="form-group">
+        <label for="address">Shipping Address:</label>
+        <textarea id="address" name="address" rows="3" placeholder="Enter your shipping address"></textarea>
+    </div>
+
+    <!-- 연락처 입력란 -->
+    <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+    </div>
+
+    <!-- 이메일 입력란 -->
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email address">
+    </div>
+
+    <!-- 결제 수단 선택 -->
+    <div class="form-group">
+        <label for="paymentMethod">Select Payment Method:</label>
+        <select id="paymentMethod" class="payment-method">
+            <option value="card">Credit Card</option>
+            <option value="toss">Toss</option>
+            <option value="kakaopay">KakaoPay</option>
+        </select>
+    </div>
+
+    <!-- 하단 버튼 섹션 -->
+    <div class="button-section">
+        <button class="action-button" id="backButton">Previous</button>
+        <button class="action-button" id="checkoutButton">Pay</button>
+    </div>
+</div>
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+    $(document).ready(function() {
+        let selectedPaymentMethod = 'card'; // 기본 결제 방법은 신용카드로 설정
+
+        // 결제 수단 선택 시 이벤트 처리
+        $("#paymentMethod").change(function() {
+            selectedPaymentMethod = $(this).val(); // 선택한 결제 수단 업데이트
+        });
+
+        // 이전 버튼 클릭 시 /demo/cart 페이지로 이동
+        $("#backButton").click(function() {
+            window.location.href = '/demo/cart';
+        });
+
+        // 구매 버튼 클릭 시 이벤트 처리
+        $("#checkoutButton").click(function () {
+            // 현재 총합계를 확인
+            const totalPrice = parseFloat($("#totalPrice").text().replace('Total: $', ''));
+
+            // 총합계가 0이면 결제 로직을 실행하지 않음
+            if (totalPrice === 0) {
+                alert('Your cart is empty. Please add items to your cart before checking out.');
+                return; // 함수 종료
+            }
+
+            // member의 nickname이 anonymous인지 체크
+            const usernickname = "[[${member.nickname}]]";
+
+            if (usernickname === "anonymous") {
+                // anonymous이면 /demo/signin 페이지로 이동
+                window.location.href = '/demo/signin';
+            } else {
+                // anonymous가 아니면 결제로직을 수행하는 AJAX 호출
+                $.ajax({
+                    url: '/demo/purchase',
+                    type: 'POST',
+                    data: {memberId: [[${member.id}]]},
+                    success: function (response) {
+                        requestPay();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', status, error);
+                        alert('Purchase failed. Please try again.');
+                    }
+                });
+            }
+        });
+
+        // 결제 요청 함수
+        function requestPay() {
+            IMP.init('imp84615760'); // "가맹점 식별코드"를 사용
+
+            let pgProvider;
+            if (selectedPaymentMethod === 'card') {
+                pgProvider = "settle.portone1";
+            } else if (selectedPaymentMethod === 'toss') {
+                pgProvider = "tosspay.tosstest";
+            } else if (selectedPaymentMethod === 'kakaopay') {
+                pgProvider = "kakaopay.TC0ONETIME";
+            }
+
+            IMP.request_pay({
+                pg: pgProvider,
+                pay_method: selectedPaymentMethod,
+                merchant_uid: 'kakaotest' + new Date().getTime(),
+                name: '결제테스트',
+                amount: 1000,
+                buyer_email: 'iamport@siot.do',
+                buyer_name: '구매자',
+                buyer_tel: '010-1234-5678',
+                buyer_addr: '서울특별시 강남구 삼성동',
+                buyer_postcode: '123-456'
+            }, function (rsp) {
+                console.log(rsp);
+                if (rsp.success) {
+                    var msg = '결제가 완료되었습니다.';
+                    alert(msg);
+                    window.location.reload();
+                } else {
+                    var msg = '결제에 실패하였습니다.';
+                    msg += '에러내용 : ' + rsp.error_msg;
+                    alert(msg);
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

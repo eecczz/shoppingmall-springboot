@@ -1,0 +1,111 @@
+/* 기본적인 앱 스타일 */
+.App {
+  text-align: center;
+}
+
+/* 로고 스타일 */
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+  transition: transform 0.2s ease-in-out;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 10s linear; /* 애니메이션 속도 조정 */
+  }
+}
+
+/* 헤더 스타일 */
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding: 20px;
+}
+
+/* 링크 스타일 */
+.App-link {
+  color: #61dafb;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.App-link:hover {
+  color: #21a1f1; /* 링크 호버 시 색상 변경 */
+}
+
+/* 로고 회전 애니메이션 */
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .App-header {
+    font-size: calc(8px + 2vmin);
+    padding: 10px;
+  }
+
+  .App-logo {
+    height: 30vmin;
+  }
+}
+
+@media (max-width: 480px) {
+  .App-header {
+    font-size: calc(6px + 2vmin);
+  }
+
+  .App-logo {
+    height: 25vmin;
+  }
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #000 !important;
+  border-color: #000 !important;
+  color: #fff !important;
+}
+
+.pagination .page-item.active .page-link:hover {
+  background-color: #000 !important;
+  border-color: #000 !important;
+  color: #fff !important;
+}
+
+.navbar .btn-outline-dark {
+  border-color: #000 !important;
+  color: #000 !important;
+}
+
+.navbar .btn-outline-dark:hover {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.navbar .member-info {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .member-info span {
+  margin-right: 10px;
+  font-weight: bold;
+  color: #000;
+}
+
+.navbar .member-info button {
+  margin-left: 5px;
+}

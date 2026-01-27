@@ -1,0 +1,147 @@
+/* 전체 페이지 스타일 */
+.Cart-page {
+    padding: 20px;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+/* 상품 섹션 스타일 */
+.Cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.Cart-item img {
+    width: 150px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.Cart-item-details {
+    flex-grow: 1;
+    margin-left: 20px;
+    text-align: left;
+}
+
+.Cart-item-details h5 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.Cart-item-details .price {
+    font-size: 1rem;
+    color: #343a40;
+}
+
+.Cart-item-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Cart-item-actions input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.Cart-item-actions button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Cart-item-actions button:hover {
+    background-color: #c82333;
+}
+
+/* 총합계 섹션 스타일 */
+.Cart-summary {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: right;
+}
+
+.Cart-summary h2 {
+    font-size: 1.5rem;
+    color: #343a40;
+}
+
+.Cart-summary .checkout-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Cart-summary .checkout-button:hover {
+    background-color: #218838;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .Cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .Cart-item img {
+        width: 100px;
+        height: 150px;
+    }
+
+    .Cart-item-details h5 {
+        font-size: 1rem;
+    }
+
+    .Cart-summary {
+        text-align: center;
+    }
+
+    .Cart-summary h2 {
+        font-size: 1.25rem;
+    }
+
+    .Cart-summary .checkout-button {
+        width: 100%;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .Cart-item img {
+        width: 80px;
+        height: 120px;
+    }
+
+    .Cart-item-details h5 {
+        font-size: 0.9rem;
+    }
+
+    .Cart-summary h2 {
+        font-size: 1rem;
+    }
+
+    .Cart-summary .checkout-button {
+        padding: 10px;
+    }
+}

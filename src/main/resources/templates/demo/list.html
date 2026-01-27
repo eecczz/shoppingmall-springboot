@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:replace="~{/demo/header :: setContent(~{this::content} )}">
+    <th:block th:fragment="content">
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Shop in style</h1>
+            <p class="lead fw-normal text-white-50 mb-0">With this shop homepage template</p>
+        </div>
+    </div>
+</header>
+<!-- Section-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <!-- Search Bar -->
+        <form class="mb-4">
+            <div class="input-group">
+                <input type="text" class="form-control" id="searchInput" placeholder="Search for products..." aria-label="Search for products" aria-describedby="button-search">
+                <button class="btn btn-outline-dark" type="button" id="button-search">Search</button>
+            </div>
+        </form>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <tr th:each="post: ${postDto}">
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder" th:text="${post.itemname}"/>
+                                <!-- Product price-->
+                                <span th:text="'$' + ${post.price}"></span>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center" th:id="${post.id}"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                        </div>
+                    </div>
+                </div>
+            </tr>
+        </div>
+        <!-- Pagination -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <!-- Previous Button -->
+                <li class="page-item" th:classappend="${pagenum == 0} ? 'disabled'">
+                    <a class="page-link" href="#" th:data-page="${pagenum - 1}" tabindex="-1">Previous</a>
+                </li>
+                <!-- Page Numbers -->
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, postDto.totalPages - 1)}" th:classappend="${i == pagenum} ? 'active'">
+                    <a class="page-link" href="#" th:text="${i + 1}" th:data-page="${i}"></a>
+                </li>
+                <!-- Next Button -->
+                <li class="page-item" th:classappend="${pagenum == postDto.totalPages - 1} ? 'disabled'">
+                    <a class="page-link" href="#" th:data-page="${pagenum + 1}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+</footer>
+        <script
+                src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+    $(document).ready(function() {
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) { // 캐시된 페이지가 불러와질 때
+                window.location.reload(); // 강제로 페이지 리로드
+            }
+        });
+
+        // 검색 버튼 클릭 시 검색 수행
+        $("#button-search").click(function(){
+            var keyword = $("#searchInput").val();
+            if (keyword !== '') {
+                window.location.href = '/demo/list?keyword=' + encodeURIComponent(keyword) + '&pagenum=0';
+            }
+        });
+
+        // 페이지 번호 클릭 시 해당 페이지로 이동
+        $(".page-link").click(function(){
+            var page = $(this).data('page');
+            var keyword = $("#searchInput").val() || '';
+            window.location.href = '/demo/list?keyword=' + encodeURIComponent(keyword) + '&pagenum=' + page;
+        });
+
+        // 상품 카드 클릭 시 상세 페이지로 이동
+        $(".text-center").click(function(){
+            var itemId = $(this).attr('id');
+            if (itemId !== undefined && itemId !== '') {
+                window.location.href = '/demo/item-detail/' + itemId;
+            }
+        });
+    });
+</script>
+</th:block>
+</th:block>
+</body>
+</html>

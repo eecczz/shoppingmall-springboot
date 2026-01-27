@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Item - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/item-detail/assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/item-detail/css/styles.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .form-control:focus {
+            border-color: #555;
+            outline: none;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.875em;
+            margin-top: 5px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #555;
+        }
+
+        .form-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .form-group a {
+            color: #555;
+            text-decoration: none;
+        }
+
+        .form-group a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Sign Up</h2>
+    <form role="form" action="/demo/signup" th:object="${formDto}" method="post">
+        <div class="form-group">
+            <label>Full Name</label>```````````````````````````````
+            <input type="text" class="form-control" th:field="*{fullname}" placeholder="Enter your full name" required>
+            <div class="error-message" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></div>
+        </div>
+        <div class="form-group">
+            <label>Nickname</label>
+            <input type="text" class="form-control" th:field="*{nickname}" placeholder="Enter your nickname" required>
+            <div class="error-message" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}"></div>
+        </div>
+        <div class="form-group">
+            <label>Username (ID)</label>
+            <input type="text" class="form-control" th:field="*{userid}" placeholder="Enter your username" required>
+            <div class="error-message" th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}"></div>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" th:field="*{userpw}" placeholder="Enter your password" required>
+            <div class="error-message" th:if="${#fields.hasErrors('userpw')}" th:errors="*{userpw}"></div>
+        </div>
+        <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="confirm-password" class="form-control" th:field="*{userpw}" placeholder="Confirm your password" required>
+            <div class="error-message" th:if="${#fields.hasErrors('userpw')}" th:errors="*{userpw}"></div>
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-control" th:field="*{email}" placeholder="Enter your email" required>
+            <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        </div>
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" class="form-control" th:field="*{phonenum}" placeholder="Enter your phone number" required>
+            <div class="error-message" th:if="${#fields.hasErrors('phonenum')}" th:errors="*{phonenum}"></div>
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <input type="text" class="form-control" th:field="*{adr}" placeholder="Enter your address" required>
+            <div class="error-message" th:if="${#fields.hasErrors('adr')}" th:errors="*{adr}"></div>
+        </div>
+        <div class="form-group">
+            <label>Gender</label>
+            <select class="form-control" th:field="*{gender}">
+                <option value="">Select your gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Date of Birth</label>
+            <input type="date" class="form-control" th:field="*{birth}">
+        </div>
+        <div class="form-group">
+            <label>
+                <input type="checkbox" th:field="*{agreeterms}">
+                I agree to the <a href="#">terms and conditions</a>
+            </label>
+        </div>
+        <button type="submit" class="btn">Sign Up</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Order History</title>
+    <!-- 부트스트랩 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .btn {
+            background-color: #000;
+            color: #fff;
+        }
+        .btn:hover {
+            background-color: #333;
+        }
+        .order-summary {
+            background-color: #e9ecef;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">My Order History</h1>
+
+    <!-- 주문 정보 섹션 -->
+    <div th:each="order : ${orders}">
+        <div class="order-summary mb-4 p-3">
+            <p><strong>Order ID:</strong> <span th:text="${order.id}"></span></p> <!-- 주문 ID -->
+            <p><strong>Status:</strong> <span th:text="${order.status}"></span></p> <!-- 주문 상태 -->
+
+            <!-- 주문 상태가 PURCHASED일 때만 취소 버튼이 표시됨 -->
+            <div th:if="${order.status == 'PURCHASED'}">
+                <button type="button" class="btn btn-danger" th:onclick="'/cancel-order/' + ${order.id}">Cancel Order</button>
+            </div>
+        </div>
+
+        <!-- 주문 아이템 목록 -->
+        <div th:each="item : ${order.orderItems}">
+            <!-- 각 상품을 위한 row -->
+            <div class="row gx-4 gx-lg-5 align-items-center mb-5">
+                <!-- 이미지 섹션 -->
+                <div class="col-md-6" style="max-width: 200px;">
+                    <img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/200x250/dee2e6/6c757d.jpg" alt="Product Image" style="max-width: 100%;" />
+                </div>
+                <!-- 텍스트와 버튼 섹션 -->
+                <div class="col-md-6" style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    <h1 class="display-6 fw-bolder" style="font-size: 1.5rem;" th:text="${item.post.itemname}"></h1> <!-- 상품명 -->
+                    <div class="fs-5 mb-3">
+                        <span class="price" style="font-size: 1rem;" th:text="'$' + ${item.post.price * item.quantity}" th:data-unit-price="${item.post.price}"></span> <!-- 가격 및 수량 -->
+                    </div>
+                    <p class="lead" style="font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                    <div class="d-flex">
+                        <input class="form-control text-center me-3 quantity-input" th:data-item-id="${item.id}" type="number" th:value="${item.quantity}" min="1" style="max-width: 3rem" disabled /> <!-- 수량 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 버튼들 -->
+    <div class="text-right">
+        <a href="/shop" class="btn btn-secondary">Continue Shopping</a>
+    </div>
+</div>
+
+<!-- 부트스트랩 JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
