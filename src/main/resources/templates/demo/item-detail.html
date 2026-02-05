@@ -14,7 +14,7 @@
     <link href="/item-detail/css/styles.css" rel="stylesheet" />
 </head>
 <body>
-<th:block th:replace="~{/demo/header :: setContent(~{this::content} )}">
+<th:block th:replace="~{demo/header :: setContent(~{this::content} )}">
 <th:block th:fragment="content">
 <!-- Product section-->
 <section class="py-5">
@@ -32,16 +32,16 @@
                 <div class="d-flex">
                     <input class="form-control text-center me-3" id="inputQuantity" type="num" th:value="1" style="max-width: 3rem" />
 
-                    <!-- anonymous일 때 -->
-                    <button th:if="${member.nickname == 'anonymous'}"
+                    <!-- 로그인 안 했을 때: member가 없거나 nickname이 없으면 로그인으로 -->
+                    <button th:if="${member == null or member.nickname == null}"
                             id="addCart0" class="btn btn-outline-dark flex-shrink-0" type="button"
-                            onclick="window.location.href='/demo/signin';">
+                            th:onclick="|location.href='@{/demo/signin}'|">
                         <i class="bi-cart-fill me-1"></i>
                         Add to cart
                     </button>
 
-                    <!-- anonymous가 아닐 때 -->
-                    <button th:if="${member.nickname != 'anonymous'}"
+                    <!-- 로그인 했을 때 -->
+                    <button th:if="${member != null and member.nickname != null}"
                             id="addCart" class="btn btn-outline-dark flex-shrink-0" type="button">
                         <i class="bi-cart-fill me-1"></i>
                         Add to cart

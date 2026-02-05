@@ -60,13 +60,13 @@ public class DemoController {
     @GetMapping("/signup")
     public String signup(Model model) {
         model.addAttribute("formDto",  new MemberFormDto());
-        return "/demo/signup";
+        return "demo/signup";
     }
 
     @PostMapping("/signup")
     public String signupPost(@Valid MemberFormDto formDto, BindingResult result) {
         if (result.hasErrors()) {
-            return "/demo/signup";
+            return "demo/signup";
         }
         Member member = new Member();
         member.setNickname(formDto.getNickname());
@@ -82,7 +82,7 @@ public class DemoController {
 
     @GetMapping("/signin")
     public String signin() {
-        return "/demo/signin";
+        return "demo/signin";
     }
 
     @PostMapping("/signin")
@@ -138,7 +138,7 @@ public class DemoController {
         model.addAttribute("cart", cart);
         if (cart != null && cart.getSavedItems() != null)
             model.addAttribute("cartCount", cart.getSavedItems().size());
-        return "/demo/list";
+        return "demo/list";
     }
 
     @GetMapping("/item-detail/{id}")
@@ -163,7 +163,7 @@ public class DemoController {
         model.addAttribute("cart", cart);
         if (cart != null && cart.getSavedItems() != null)
             model.addAttribute("cartCount", cart.getSavedItems().size());
-        return "/demo/item-detail";
+        return "demo/item-detail";
     }
 
     @ResponseBody
@@ -196,7 +196,7 @@ public class DemoController {
         model.addAttribute("cart", cart);
         if (cart != null && cart.getSavedItems() != null)
             model.addAttribute("cartCount", cart.getSavedItems().size());
-        return "/demo/cart";
+        return "demo/cart";
     }
 
     @ResponseBody
@@ -242,7 +242,7 @@ public class DemoController {
         model.addAttribute("cart", cart);
         if (cart != null && cart.getSavedItems() != null)
             model.addAttribute("cartCount", cart.getSavedItems().size());
-        return "/demo/purchase";
+        return "demo/purchase";
     }
 
     @ResponseBody
