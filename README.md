@@ -11,9 +11,9 @@ Java Spring Boot 기반의 서버사이드 쇼핑몰 웹 서비스입니다.
 
 ## 🔗 배포 환경
 
-학교 클라우드 **jcloud** 환경(Ubuntu)에 배포되어 있으며, 외부에서 아래 주소로 접속 가능합니다.
+우분투 기반 학교 클라우드 **jcloud** 환경(Ubuntu)에 배포되어 있으며, 외부에서 아래 주소로 접속 가능합니다.
 - **외부 접속 URL:** `http://113.198.66.75:10134/demo/list`
-- **Cloud**: jcloud (학교 클라우드)
+- **Cloud**: jcloud
 - **Server**: Spring Boot 단일 서버 배포
 - **DB**: MySQL (운영 DB)
 - **결제 연동**: PortOne (테스트 결제 모드)
