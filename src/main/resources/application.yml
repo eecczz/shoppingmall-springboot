@@ -4,9 +4,9 @@ spring:
   # Database 설정
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/tpsm
-    username: tpsmuser
-    password: hjh75327!@
+    url: ${DB_URL:jdbc:mariadb://localhost:3306/tpsm}
+    username: ${DB_USERNAME:tpsmuser}
+    password: ${DB_PASSWORD}
 
   # JPA 설정
   jpa:
@@ -22,10 +22,10 @@ spring:
       view:
         prefix: "/WEB-INF/views"
   imp:
-    code: "imp84615760"
+    code: ${IMP_CODE}
     api:
-      key: "0614216357062647"
-      secretkey: "VOvC0ZOCQVqdNv8NiDnmpRcSN61eod7mh2z8ZSgccddqNtN5NSYdHXniRxdTZlDoCcLVKR4VESPdWAlj"
+      key: ${IMP_API_KEY}
+      secretkey: ${IMP_API_SECRET}
   server:
     servlet:
       session:
