@@ -1,36 +1,50 @@
-# Shopping Mall Spring Boot
+# PaymentAPI (Shoppingmall Demo)
 
-## 프로젝트 개요
+Spring Boot + MariaDB 기반 쇼핑몰 데모 프로젝트입니다.  
+상품 조회 → 상세 보기 → 장바구니 → 결제(PortOne 테스트) 흐름을 **Thymeleaf** 화면으로 제공합니다.
 
-Spring Boot 기반 쇼핑몰 서버 사이드 프로젝트입니다. 회원가입과 로그인, 상품 조회, 장바구니, 주문, PortOne 테스트 결제 흐름을 end-to-end로 구현했습니다.
+---
 
-## 주요 기능
+## 🌐 배포 주소 (jcloud)
+학교 클라우드 **jcloud** 환경(Ubuntu)에 배포되어 있으며, 외부에서 아래 주소로 접속 가능합니다.
 
-- 회원가입, 로그인, 세션 기반 인증
-- 상품 목록/상세 조회
-- 장바구니 상품 추가, 수량 변경, 삭제
-- 주문 생성과 결제 검증
-- QueryDSL 기반 검색 및 페이징
-- jcloud 환경 배포 경험
+- **외부 접속 URL:** `http://113.198.66.75:10134/demo/list`
 
-## 기술 스택
+> 포트(10134)가 외부에서 열려 있어야 접속됩니다. 접속이 안 되면 jcloud 방화벽/보안그룹 인바운드 설정을 확인하세요.
 
-- Backend: Java 17, Spring Boot, Spring MVC
-- Database: MySQL, JPA, QueryDSL
-- Payment: PortOne API
-- Template/View: Thymeleaf
-- Build: Gradle
+---
 
-## 로컬 실행
+## 1) 주요 기능
+- 회원가입 / 로그인 / 로그아웃 (세션 기반)
+- 상품 목록 조회 (검색 + 페이징)
+- 상품 상세 보기
+- 장바구니 담기 / 삭제 / 수량 변경
+- 구매 페이지
+- PortOne(아임포트) 결제 검증(테스트 연동)
 
-```bash
-./gradlew build
-./gradlew bootRun
-```
+---
 
-DB 접속 정보와 PortOne API 값은 `.env.example`을 참고해 로컬 환경 변수로 설정합니다.
+## 2) 기술 스택
+- Backend: Spring Boot 3.3.x, Spring MVC
+- DB: MariaDB
+- ORM: Spring Data JPA, Querydsl
+- View: Thymeleaf
+- Deploy: Ubuntu(jcloud) + Executable Jar
 
-## 저장소 관리 기준
+---
 
-- DB 계정, 결제 API 키 등 민감한 값은 Git에 직접 커밋하지 않습니다.
-- 로컬 `.env` 파일은 제외하고, 필요한 값은 `.env.example`로만 안내합니다.
+## 3) 로컬 실행 방법
+### 3-1. 요구사항
+- Java 17
+- MariaDB
+- Gradle
+
+### 3-2. DB 생성 및 권한(예시)
+```sql
+CREATE DATABASE IF NOT EXISTS tpsm
+  DEFAULT CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+CREATE USER 'tpsmuser'@'localhost' IDENTIFIED BY 'YOUR_PASSWORD';
+GRANT ALL PRIVILEGES ON tpsm.* TO 'tpsmuser'@'localhost';
+FLUSH PRIVILEGES;
